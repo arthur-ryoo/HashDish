@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import { axiosApiInstance as API } from '../../../utils/axiosConfig';
 
-var STORAGE_URL = 'https://lycheestroage0001.blob.core.windows.net/';
+let STORAGE_URL = 'https://homecookimages.blob.core.windows.net/';
 if (process.env.NODE_ENV === 'production') {
   STORAGE_URL = 'https://lycheestorage9999.blob.core.windows.net/';
 }
