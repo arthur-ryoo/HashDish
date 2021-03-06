@@ -474,7 +474,7 @@ class EditMenuItem extends Component {
               submitId={
                 this.props.item ? this.props.item.menuId : null
               }
-              submitTitle={this.props.item ? 'Update' : 'Add Item'}
+              submitTitle={this.props.item ? 'Update' : 'Add'}
               cancelId={
                 this.props.item
                   ? this.props.item.menuId
