@@ -31,7 +31,7 @@ class ViewMenuItem extends Component {
           <h3>{this.props.item.name}</h3>
           {this.props.item.pictureKey && (
             <img
-              // src={`${STORAGE_URL}pictures/${this.props.item.pictureKey}.jpg`}
+              src={`${STORAGE_URL}pictures/${this.props.item.pictureKey}.jpg`}
               alt="menu item"
             />
           )}

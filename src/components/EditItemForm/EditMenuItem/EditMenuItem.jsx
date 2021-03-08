@@ -26,6 +26,7 @@ class EditMenuItem extends Component {
       name: this.props.item.name,
       description: this.props.item.description || '',
       price: this.props.item.price,
+      category: this.props.item.category,
       optionalOptions: this.props.optionDefs
         ? this.props.optionDefs.optional
         : [],
@@ -45,6 +46,7 @@ class EditMenuItem extends Component {
       name: '',
       description: '',
       price: '',
+      category: '',
       optionalOptions: [],
       requiredOptions: [],
       image: null,
@@ -69,6 +71,7 @@ class EditMenuItem extends Component {
         name: this.state.name,
         description: this.state.description,
         price: this.state.price,
+        category: this.state.category,
         optionDefinitions: stringifiedOptionDefs,
       }),
     )
@@ -98,7 +101,54 @@ class EditMenuItem extends Component {
   };
 
   handleAddItem = async (event) => {
-    return null;
+    event.preventDefault();
+    this.setState({ isLoading: true });
+    const optionDefs = {
+      required: this.state.requiredOptions,
+      optional: this.state.optionalOptions,
+    };
+    const stringifiedOptionDefs = JSON.stringify(optionDefs);
+    const newItem = {
+      name: this.state.name,
+      description: this.state.description,
+      price: this.state.price,
+      category: this.state.category,
+      dietaryRestriction: '',
+      optionDefinitions: stringifiedOptionDefs,
+    };
+
+    try {
+      await API.post(`/kitchen/menu`, newItem)
+        .then(async (response) => {
+          if (response.status === 200) {
+            console.log(response);
+            if (
+              this.state.image &&
+              this.state.image.startsWith('data:image/jpeg;base64')
+            ) {
+              await API.patch(
+                `/kitchen/menu/picture/${response.data.menuId}`,
+                {
+                  data: this.state.image.split(',')[1],
+                },
+              ).then((response) => {
+                if (response.status === 200) {
+                  console.log(response);
+                }
+              });
+            }
+          }
+        })
+        .then(async (response) => {
+          await this.props.handleGetKitchen();
+        })
+        .finally(() => {
+          this.setState({ isLoading: false });
+          this.props.handleAddItemForm();
+        });
+    } catch (error) {
+      console.log(`AddItem POST Error: ${error}`);
+    }
   };
 
   handleDescriptionChange = (e) => {
@@ -404,6 +454,7 @@ class EditMenuItem extends Component {
               itemImage={this.state.image}
               itemDescription={this.state.description}
               itemPrice={this.state.price}
+              itemCategory={this.state.category}
               handleChange={this.handleDescriptionChange}
               handleImageChange={this.handleImageChange}
             />
@@ -426,7 +477,7 @@ class EditMenuItem extends Component {
               submitId={
                 this.props.item ? this.props.item.menuId : null
               }
-              submitTitle={this.props.item ? 'Update' : 'Add Item'}
+              submitTitle={this.props.item ? 'Update' : 'Add'}
               cancelId={
                 this.props.item
                   ? this.props.item.menuId
