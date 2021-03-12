@@ -1,38 +1,25 @@
-import React from 'react';
-import { Component } from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import UpdateHours from '../../components/UpdateHours/UpdateHours';
 import UpdatePhoto from '../../components/UpdatePhoto/UpdatePhoto';
-import styles from './RestProfile.module.css';
 import { axiosApiInstance as API } from '../../utils/axiosConfig';
-
-function profileTime(timeArr) {
-  let timeStringArr = [];
-  for (var time of timeArr) {
-    var start = [
-      String(
-        Math.floor(time[0] / 100) % 12 === 0
-          ? 12
-          : Math.floor(time[0] / 100) % 12,
-      ),
-      ':',
-      ('0' + String(time[0] % 100)).slice(-2),
-      time[0] / 100 >= 12 ? ' PM' : ' AM',
-    ].join('');
-    var end = [
-      String(
-        Math.floor(time[1] / 100) % 12 === 0
-          ? 12
-          : Math.floor(time[1] / 100) % 12,
-      ),
-      ':',
-      ('0' + String(time[1] % 100)).slice(-2),
-      time[1] / 100 >= 12 ? ' PM' : ' AM',
-    ].join('');
-    timeStringArr.push(`${start} - ${end}`);
-  }
-  return timeStringArr.join(', ');
-}
+import {
+  Box,
+  Button,
+  Backdrop,
+  Container,
+  CircularProgress,
+  Dialog,
+  Divider,
+  Input,
+  List,
+  ListItemText,
+  NativeSelect,
+  Typography,
+} from '@material-ui/core';
+import PlaceIcon from '@material-ui/icons/Place';
+import PhoneIcon from '@material-ui/icons/Phone';
+import useStyles from './RestProfileStyles';
 
 const DAYS = [
   'Sunday',
@@ -49,56 +36,78 @@ if (process.env.NODE_ENV === 'production') {
   STORAGE_URL = 'https://lycheestorage9999.blob.core.windows.net/';
 }
 
-class Profile extends Component {
-  state = {
-    loading: false,
-  };
+function profileTime(timeArr) {
+  let timeStringArr = [];
+  for (let time of timeArr) {
+    let start = [
+      String(
+        Math.floor(time[0] / 100) % 12 === 0
+          ? 12
+          : Math.floor(time[0] / 100) % 12,
+      ),
+      ':',
+      ('0' + String(time[0] % 100)).slice(-2),
+      time[0] / 100 >= 12 ? ' PM' : ' AM',
+    ].join('');
+    let end = [
+      String(
+        Math.floor(time[1] / 100) % 12 === 0
+          ? 12
+          : Math.floor(time[1] / 100) % 12,
+      ),
+      ':',
+      ('0' + String(time[1] % 100)).slice(-2),
+      time[1] / 100 >= 12 ? ' PM' : ' AM',
+    ].join('');
+    timeStringArr.push(`${start} - ${end}`);
+  }
+  return timeStringArr.join(', ');
+}
 
-  componentWillUnmount = () => {
-    if (this.props.editProfPhoto) {
-      this.props.handleFormToggle('editProfPhoto');
-    }
-    if (this.props.editHours) {
-      this.props.handleFormToggle('editHours');
-    }
-  };
+function Profile(props) {
+  const classes = useStyles();
 
-  handleGenerateReport = async () => {
-    this.setState({ loading: true });
-    if (this.state.month) {
-      await API.get(
-        `/kitchen/report/${this.state.year}/${this.state.month}`,
-      ).then((response) => {
-        if (response.status === 200) {
-          setTimeout(() => {
-            this.setState({ loading: false });
+  const [isLoading, setIsLoading] = useState(false);
+  const [state, setState] = useState({
+    year: '',
+    yearOnly: '',
+    month: '',
+  });
+
+  const { year, yearOnly, month } = state;
+
+  const handleGenerateReport = async () => {
+    setIsLoading(true);
+    if (month) {
+      await API.get(`/kitchen/report/${year}/${month}`).then(
+        (response) => {
+          if (response.status === 200) {
+            setIsLoading(false);
             window.open(
               `https://hashdishhtmltopdf.azurewebsites.net/api/convert?url=${response.data.url}`,
             );
-          }, 1000);
-        }
-      });
+          }
+        },
+      );
     } else {
-      await API.get(`/kitchen/report/${this.state.yearOnly}/*`).then(
+      await API.get(`/kitchen/report/${yearOnly}/*`).then(
         (response) => {
           if (response.status === 200) {
-            setTimeout(() => {
-              this.setState({ loading: false });
-              window.open(
-                `https://hashdishhtmltopdf.azurewebsites.net/api/convert?url=${response.data.url}`,
-              );
-            }, 1000);
+            setIsLoading(false);
+            window.open(
+              `https://hashdishhtmltopdf.azurewebsites.net/api/convert?url=${response.data.url}`,
+            );
           }
         },
       );
     }
   };
 
-  handleMonthChange = (e) => {
-    var yearmonth = e.target.value.split('-');
-    var year = parseInt(yearmonth[0], 10);
-    var month = parseInt(yearmonth[1], 10);
-    var now = new Date(
+  const handleMonthChange = (e) => {
+    let yearMonth = e.target.value.split('-');
+    let year = parseInt(yearMonth[0], 10);
+    let month = parseInt(yearMonth[1], 10);
+    let now = new Date(
       new Date().getFullYear(),
       new Date().getMonth() - 1,
       1,
@@ -112,154 +121,174 @@ class Profile extends Component {
           -2,
         )}`,
       );
-      this.setState({
+      setState({
         year: undefined,
         month: undefined,
         yearOnly: undefined,
       });
     } else {
-      this.setState({
+      setState({
         year,
         month,
-        yearOnly: undefined,
       });
     }
   };
 
-  handleYearChange = (e) => {
-    this.setState({
+  const handleYearChange = (e) => {
+    setState({
       yearOnly: e.target.value,
-      year: undefined,
-      month: undefined,
     });
   };
 
-  render() {
-    return (
-      <div>
-        {this.props.myKitchen === null ? (
-          <Redirect to="/" />
-        ) : (
-          <section className={styles.container}>
-            <div className={styles.infocont}>
-              <div className={styles.title}>
-                <h1>{this.props.myKitchen.name}</h1>
-                <h2>{this.props.myKitchen.address}</h2>
-                <h2>tel: {this.props.myKitchen.phoneNumber}</h2>
-              </div>
-              {this.props.editProfPhoto ? (
-                <UpdatePhoto
-                  handleFormToggle={this.props.handleFormToggle}
-                  handleGetKitchen={this.props.handleGetKitchen}
-                  handleClick={this.props.handleClick}
-                />
-              ) : (
-                <div className={styles.logo}>
-                  <img
-                    src={`${STORAGE_URL}pictures/${this.props.myKitchen.pictureKey}.jpg`}
-                    alt="restaurant logo"
-                  />
-                  <div className={styles.edit}>
-                    <button
-                      id="editProfPhoto"
-                      onClick={this.props.handleClick}
-                    >
-                      Update Photo
-                    </button>
-                  </div>
-                  <div
-                    className={
-                      this.state.year ? styles.edit : styles.disabled
-                    }
-                  >
-                    <input
-                      type="month"
-                      value={
-                        this.state.year
-                          ? `${this.state.year}-${(
-                              '0' + this.state.month
-                            ).slice(-2)}`
-                          : ''
-                      }
-                      onChange={this.handleMonthChange}
-                    />
-                    <button
-                      disabled={!this.state.year}
-                      id="generateReport"
-                      onClick={this.handleGenerateReport}
-                    >
-                      {this.state.loading ? (
-                        <div className={styles.loader} />
-                      ) : (
-                        'Generate Monthly Report'
-                      )}
-                    </button>
-                  </div>
-                  <div
-                    className={
-                      this.state.yearOnly
-                        ? styles.edit
-                        : styles.disabled
-                    }
-                  >
-                    <select onChange={this.handleYearChange}>
-                      <option>Select Year</option>
-                      {[
-                        ...new Array(new Date().getFullYear() - 2020),
-                      ].map((v, i) => {
-                        return <option>{i + 2020}</option>;
-                      })}
-                    </select>
-                    <button
-                      disabled={!this.state.yearOnly}
-                      id="generateReport"
-                      onClick={this.handleGenerateReport}
-                    >
-                      {this.state.loading ? (
-                        <div className={styles.loader} />
-                      ) : (
-                        'Generate Yearly Report'
-                      )}
-                    </button>
-                  </div>
-                </div>
-              )}
+  return (
+    <div>
+      {props.myKitchen === null ? (
+        <Redirect to="/profile" />
+      ) : (
+        <Container className={classes.root} maxWidth={false}>
+          <div className={classes.container}>
+            <Typography variant="h4">Profile</Typography>
+            <img
+              className={classes.image}
+              src={`${STORAGE_URL}pictures/${props.myKitchen.pictureKey}.jpg`}
+              alt="restaurant logo"
+            />
+            <div className={classes.subTitle}>
+              <Typography variant="h5">
+                {props.myKitchen.name}
+              </Typography>
             </div>
-            {this.props.editHours ? (
-              <UpdateHours
-                openHours={this.props.openHours}
-                handleClick={this.props.handleClick}
-                handleFormToggle={this.props.handleFormToggle}
-                handleGetKitchen={this.props.handleGetKitchen}
-              />
+            <Typography variant="h6">
+              <PlaceIcon fontSize="small" color="primary" />
+              {props.myKitchen.address}
+            </Typography>
+            <Typography variant="h6">
+              <PhoneIcon fontSize="small" color="primary" />
+              {props.myKitchen.phoneNumber}
+            </Typography>
+            {props.editProfPhoto ? (
+              <Dialog open={true}>
+                <UpdatePhoto
+                  handleFormToggle={props.handleFormToggle}
+                  handleGetKitchen={props.handleGetKitchen}
+                  handleClick={props.handleClick}
+                />
+              </Dialog>
             ) : (
-              <div className={styles.info}>
-                <h3>Open Hours</h3>
-                {DAYS.map((DAY, idx) => (
-                  <div className={styles.day}>
-                    <p key={idx}>{DAY}:</p>
-                    <p className={styles.hours}>
-                      {this.props.openHours[idx]?.length > 0
-                        ? `${profileTime(this.props.openHours[idx])}`
-                        : 'Closed'}
-                    </p>
-                  </div>
-                ))}
-                <div className={styles.edit}>
-                  <button
+              <div className={classes.photoButton}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  id="editProfPhoto"
+                  onClick={props.handleClick}
+                >
+                  Update Photo
+                </Button>
+              </div>
+            )}
+          </div>
+          <div className={classes.container}>
+            <Divider />
+            <Box marginTop={5}>
+              <Typography variant="h4">Report</Typography>
+            </Box>
+            <div className={classes.reportContainer}>
+              <div className={classes.reportSubContainer}>
+                <div className={classes.subTitle}>
+                  <Typography variant="h6">Monthly Report</Typography>
+                </div>
+                <Input
+                  type="month"
+                  value={
+                    year ? `${year}-${('0' + month).slice(-2)}` : ''
+                  }
+                  onChange={handleMonthChange}
+                />
+                <Button
+                  className={classes.reportButton}
+                  variant="contained"
+                  color="primary"
+                  disabled={!year}
+                  id="generateReport"
+                  onClick={handleGenerateReport}
+                >
+                  Generate
+                </Button>
+              </div>
+              <div className={classes.reportSubContainer}>
+                <div className={classes.subTitle}>
+                  <Typography variant="h6">Yearly Report</Typography>
+                </div>
+                <NativeSelect onChange={handleYearChange}>
+                  <option>Select Year</option>
+                  {[
+                    ...new Array(new Date().getFullYear() - 2020),
+                  ].map((v, i) => {
+                    return <option key={i}>{i + 2020}</option>;
+                  })}
+                </NativeSelect>
+                <Button
+                  className={classes.reportButton}
+                  variant="contained"
+                  color="primary"
+                  disabled={!yearOnly}
+                  id="generateReport"
+                  onClick={handleGenerateReport}
+                >
+                  Generate
+                </Button>
+              </div>
+              <Backdrop className={classes.backdrop} open={isLoading}>
+                <CircularProgress color="inherit" />
+              </Backdrop>
+            </div>
+          </div>
+
+          <div className={classes.container}>
+            <Divider />
+            <Box marginTop={5}>
+              <Typography variant="h4">Open Hours</Typography>
+            </Box>
+            {props.editHours ? (
+              <Dialog open={true}>
+                <UpdateHours
+                  openHours={props.openHours}
+                  handleClick={props.handleClick}
+                  handleFormToggle={props.handleFormToggle}
+                  handleGetKitchen={props.handleGetKitchen}
+                />
+              </Dialog>
+            ) : (
+              <div>
+                <Box marginTop={3}>
+                  <List component="ul" display="block">
+                    {DAYS.map((DAY, idx) => (
+                      <ListItemText key={idx}>
+                        {DAY}:{' '}
+                        {props.openHours[idx]?.length > 0
+                          ? `${profileTime(props.openHours[idx])}`
+                          : 'Closed'}
+                      </ListItemText>
+                    ))}
+                  </List>
+                </Box>
+                <div className={classes.openHoursButton}>
+                  <Button
+                    variant="contained"
+                    color="primary"
                     id="editHours"
-                    onClick={this.props.handleClick}
+                    onClick={props.handleClick}
                   >
                     Edit
-                  </button>
+                  </Button>
                 </div>
               </div>
             )}
-          </section>
-        )}
-      </div>
-    );
-  }
+          </div>
+        </Container>
+      )}
+    </div>
+  );
 }
 
 export default Profile;
