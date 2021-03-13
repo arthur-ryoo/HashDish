@@ -9,6 +9,7 @@ const MenuItems = (props) => {
         <div>
           {props.menuCats.map((category, idx) => (
             <MenuCategory
+              menuCats={props.menuCats}
               category={category}
               key={idx}
               selectedMenuItem={props.selectedMenuItem}
