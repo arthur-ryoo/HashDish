@@ -18,7 +18,7 @@ import Signup from './pages/Signup/Signup';
 
 class App extends Component {
   state = this.getInitialState();
-  
+
   getInitialState() {
     return {
       isLoading: false,
@@ -51,13 +51,12 @@ class App extends Component {
         pictureKey: data.pictureKey,
       };
       this.setState({
-				myKitchen: kitchen,
+        myKitchen: kitchen,
       });
       this.handleOpenHoursSort(kitchen.openHours);
       this.handleGetMenuItems(kitchen.kitchenId);
-      
     } catch (error) {
-        console.log('Error: ', error.message);
+      console.log('Error: ', error.message);
     }
   };
 
@@ -108,9 +107,10 @@ class App extends Component {
   // DOM Handlers
   handleClick = (e) => {
     e.preventDefault();
-    if (e.target.id) {
-      this.handleFormToggle(e.target.id);
-    } else return;
+    if (e.target.id) this.handleFormToggle(e.target.id);
+    else if (e.currentTarget.id)
+      this.handleFormToggle(e.currentTarget.id);
+    else return;
   };
 
   handleFormToggle = (id) => {
@@ -122,15 +122,14 @@ class App extends Component {
   };
 
   handleAddItemForm = () => {
-    if(this.state.addMenuItem) {
-      this.setState({addMenuItem: false});
+    if (this.state.addMenuItem) {
+      this.setState({ addMenuItem: false });
     } else {
-      this.setState({addMenuItem: true});
+      this.setState({ addMenuItem: true });
     }
-  }
+  };
 
   handleDelMenu = (id) => {
-    console.log("Delete Item");
     this.setState({ delMenu: id });
   };
 
@@ -161,9 +160,16 @@ class App extends Component {
       <Fragment>
         <CssBaseline />
         <div className="App-Outer-Container">
-          <Layout handleLogout={this.handleLogout} user={this.state.user}>
+          <Layout
+            handleLogout={this.handleLogout}
+            user={this.state.user}
+          >
             <Switch>
-              <Route exact path="/" render={() => <h1>Home Page Content</h1>} />
+              <Route
+                exact
+                path="/"
+                render={() => <h1>Home Page Content</h1>}
+              />
               <Route
                 exact
                 path="/profile"
