@@ -1,39 +1,41 @@
-import React, { Component } from 'react';
-import styles from './UpdatePhoto.module.css';
+import React, { useState } from 'react';
 import { axiosApiInstance as API } from '../../utils/axiosConfig';
+import {
+  Backdrop,
+  Button,
+  CircularProgress,
+  Typography,
+} from '@material-ui/core/';
+import Alert from '@material-ui/lab/Alert';
+import useStyles from './UpdatePhotoStyles';
 
-class UpdatePhoto extends Component {
-  constructor(props) {
-    super(props);
-    this.state = this.getInitialState();
-  }
+function UpdatePhoto(props) {
+  const classes = useStyles();
 
-  getInitialState = () => {
-    return {
-      image: null,
-    };
+  const [image, setImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const isFormValid = () => {
+    return image;
   };
 
-  isFormValid = () => {
-    return this.state.image;
-  };
-
-  resizeImage = (file) => {
+  const resizeImage = (file) => {
     if (
       window.File &&
       window.FileReader &&
       window.FileList &&
       window.Blob
     ) {
-      var reader = new FileReader();
+      let reader = new FileReader();
       // Set the image once loaded into file reader
       reader.onloadend = (e) => {
-        var image = new Image();
+        let image = new Image();
         image.onload = () => {
-          var canvas = document.createElement('canvas');
-          var MAX_WIDTH;
-          var MAX_HEIGHT;
-          var ratio = image.width / image.height;
+          let canvas = document.createElement('canvas');
+          let MAX_WIDTH;
+          let MAX_HEIGHT;
+          let ratio = image.width / image.height;
           if (1 > ratio) {
             MAX_WIDTH = 500;
             MAX_HEIGHT = 500 / ratio;
@@ -43,13 +45,11 @@ class UpdatePhoto extends Component {
           }
           canvas.width = MAX_WIDTH;
           canvas.height = MAX_HEIGHT;
-          var ctx = canvas.getContext('2d');
+          let ctx = canvas.getContext('2d');
           ctx.drawImage(image, 0, 0, MAX_WIDTH, MAX_HEIGHT);
 
           let imageURL = canvas.toDataURL(file.type);
-          this.setState({
-            image: imageURL,
-          });
+          setImage(imageURL);
         };
         image.src = e.target.result;
       };
@@ -59,61 +59,87 @@ class UpdatePhoto extends Component {
     }
   };
 
-  handleImageChange = async (e) => {
+  const handleImageChange = async (e) => {
     if (e.target.files.length > 0) {
-      this.resizeImage(e.target.files[0]);
+      resizeImage(e.target.files[0]);
     }
   };
 
-  handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     await API.patch(`/kitchen/picture`, {
-      data: this.state.image.split(',')[1],
-    }).then((response) => {
-      if (response.status === 200) {
-        console.log(response);
-      }
-    });
-    this.props.handleFormToggle('editProfPhoto');
-    this.props.handleGetKitchen();
+      data: image.split(',')[1],
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(response);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+    props.handleFormToggle('editProfPhoto');
+    props.handleGetKitchen();
   };
 
-  render() {
-    return (
-      <div className={styles.container}>
-        <form onSubmit={this.handleSubmit}>
-          <h3>Update Profile Image</h3>
-          <div className={styles.inputs}>
-            {this.state.image && (
-              <img src={this.state.image} alt="restaurant logo" />
-            )}
-            <label htmlFor="image">Upload Image:</label>
-            <input
-              id="image"
-              name="image"
-              type="file"
-              accept="image/*"
-              width="50"
-              height="50"
-              onChange={this.handleImageChange}
+  return (
+    <div className={classes.form}>
+      <form onSubmit={handleSubmit}>
+        {error && (
+          <Alert className={classes.alert} severity="error">
+            {error}
+          </Alert>
+        )}
+        <Typography variant="h6">Update Profile Image</Typography>
+        <div className={classes.input}>
+          {image && (
+            <img
+              className={classes.image}
+              src={image}
+              alt="restaurant logo"
             />
-          </div>
-          <div className={styles.btns}>
-            <button disabled={!this.isFormValid()} type="submit">
-              Update
-            </button>
-            <button
-              className={styles.cancel}
-              id="editProfPhoto"
-              onClick={this.props.handleClick}
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
-    );
-  }
+          )}
+          <input
+            id="image"
+            name="image"
+            type="file"
+            accept="image/*"
+            width="50"
+            height="50"
+            onChange={handleImageChange}
+          />
+        </div>
+        <div className={classes.buttonContainer}>
+          <Button
+            className={classes.button}
+            variant="contained"
+            color="primary"
+            disabled={!isFormValid()}
+            type="submit"
+          >
+            Update
+          </Button>
+          <Button
+            className={classes.button}
+            variant="contained"
+            color="secondary"
+            id="editProfPhoto"
+            onClick={props.handleClick}
+          >
+            Cancel
+          </Button>
+        </div>
+      </form>
+      <Backdrop className={classes.backdrop} open={isLoading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    </div>
+  );
 }
 
 export default UpdatePhoto;
