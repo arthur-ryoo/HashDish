@@ -35,13 +35,12 @@ const EditItemDescription = (props) => {
                 type="text"
                 list="categories"
                 name="category"
-                defaultValue={props.itemCategory}
+                defaultValue={
+                  props.itemCategory ? props.itemCategory : ''
+                }
                 onChange={props.handleChange}
               />
               <datalist id="categories">
-                <option name="category" value="" disabled>
-                  Choose a Category
-                </option>
                 {props.menuCats.map((category, idx) => (
                   <option name="category" value={category} key={idx}>
                     {category}
