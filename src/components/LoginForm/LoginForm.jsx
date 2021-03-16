@@ -134,7 +134,7 @@ class LoginForm extends Component {
       });
     this.props.handleSignupOrLogin();
     LocalStorageService.getAuthToken()
-      ? this.props.history.push('/')
+      ? this.props.history.push('/profile')
       : this.props.history.push('/login');
   };
 
