@@ -13,6 +13,7 @@ const MenuCategory = (props) => {
               key={idx}
               item={item}
               idx={idx}
+              menuCats={props.menuCats}
               category={props.category}
               selectedMenuItem={props.selectedMenuItem}
               delMenu={props.delMenu}

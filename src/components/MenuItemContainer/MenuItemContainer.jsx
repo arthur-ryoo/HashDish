@@ -10,6 +10,7 @@ const MenuItemContainer = (props) => {
         item={props.item}
         idx={props.idx}
         optionDefs={JSON.parse(props.item.optionDefinitions)}
+        menuCats={props.menuCats}
         handleMenuItemEdit={props.handleMenuItemEdit}
         handleMenuItemUpdate={props.handleMenuItemUpdate}
         handleMenuItemDelete={props.handleMenuItemDelete}

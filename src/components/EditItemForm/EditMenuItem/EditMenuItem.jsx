@@ -450,6 +450,7 @@ class EditMenuItem extends Component {
           </DialogTitle>
           <DialogContent>
             <EditItemDescription
+              menuCats={this.props.menuCats}
               itemName={this.state.name}
               itemImage={this.state.image}
               itemDescription={this.state.description}
