@@ -18,6 +18,7 @@ const Menu = (props) => {
         <div className={styles.container}>
           {props.addMenuItem ? (
             <EditMenuItem
+              menuCats={props.menuCats}
               addMenuItem={props.addMenuItem}
               selectedMenuItem={props.selectedMenuItem}
               handleGetKitchen={props.handleGetKitchen}

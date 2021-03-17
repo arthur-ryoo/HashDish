@@ -32,11 +32,21 @@ const EditItemDescription = (props) => {
             <div className={styles.field}>
               <label>Category</label>
               <input
-                name="category"
                 type="text"
-                value={props.itemCategory}
+                list="categories"
+                name="category"
+                defaultValue={
+                  props.itemCategory ? props.itemCategory : ''
+                }
                 onChange={props.handleChange}
               />
+              <datalist id="categories">
+                {props.menuCats.map((category, idx) => (
+                  <option name="category" value={category} key={idx}>
+                    {category}
+                  </option>
+                ))}
+              </datalist>
             </div>
             <div className={styles.field}>
               <label>Item Description</label>
