@@ -1,5 +1,5 @@
 import React from 'react';
-import MenuItemContainer from '../../MenuItemContainer/MenuItemContainer';
+import MenuItemContainer from '../MenuItemContainer/MenuItemContainer';
 import styles from './MenuCategory.module.css';
 
 const MenuCategory = (props) => {
