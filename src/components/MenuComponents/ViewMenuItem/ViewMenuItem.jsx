@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AdminButtons from '../AdminButtons/AdminButtons';
+import AdminButtons from '../../AdminButtons/AdminButtons';
 import styles from './ViewMenuItem.module.css';
 import {
   Dialog,
