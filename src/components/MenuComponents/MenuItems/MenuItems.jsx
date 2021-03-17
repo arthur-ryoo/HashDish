@@ -1,12 +1,13 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { Container } from '@material-ui/core';
 import MenuCategory from '../MenuCategory/MenuCategory';
 
 const MenuItems = (props) => {
   return (
     <div>
       {props.menuItems ? (
-        <div>
+        <Container>
           {props.menuCats.map((category, idx) => (
             <MenuCategory
               menuCats={props.menuCats}
@@ -24,7 +25,7 @@ const MenuItems = (props) => {
               handleGetKitchen={props.handleGetKitchen}
             />
           ))}
-        </div>
+        </Container>
       ) : (
         <Redirect to="/" />
       )}
