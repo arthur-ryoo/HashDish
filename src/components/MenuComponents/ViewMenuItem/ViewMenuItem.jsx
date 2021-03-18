@@ -27,7 +27,9 @@ const ViewMenuItem = (props) => {
       className={classes.root}
     >
       <div className={classes.container}>
-        <Typography variant={'h5'}>{name}</Typography>
+        <Typography variant={'h5'} className={classes.title}>
+          {name}
+        </Typography>
         {props.item.pictureKey && (
           <img
             src={`${STORAGE_URL}pictures/${pictureKey}.jpg`}
@@ -35,8 +37,12 @@ const ViewMenuItem = (props) => {
             className={classes.image}
           />
         )}
-        <Typography variant={'p'}>{description}</Typography>
-        <Typography variant={'p'}>{price}</Typography>
+        <Typography className={classes.description} variant={'p'}>
+          {description}
+        </Typography>
+        <Typography className={classes.price} variant={'p'}>
+          {price}
+        </Typography>
       </div>
       <Divider />
       {props.delMenu === menuId ? (

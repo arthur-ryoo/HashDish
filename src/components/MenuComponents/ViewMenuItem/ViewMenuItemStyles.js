@@ -12,6 +12,9 @@ const useStyles = makeStyles((theme) => ({
     padding: '1rem',
     backgroundColor: '#FFFFFF',
   },
+  title: {
+    marginBottom: '.5rem',
+  },
   image: {
     width: '70%',
     [theme.breakpoints.up('md')]: {
@@ -22,7 +25,13 @@ const useStyles = makeStyles((theme) => ({
     },
     margin: '1rem 0rem',
   },
-
+  description: {
+    fontStyle: 'italic',
+    marginBottom: '.25rem'
+  },
+  price: {
+    fontWeight: '900',
+  }
 }));
 
 export default useStyles;
