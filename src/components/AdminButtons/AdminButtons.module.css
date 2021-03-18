@@ -1,9 +1,0 @@
-.admin {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.admin div {
-  margin-left: 0.25rem;
-}
