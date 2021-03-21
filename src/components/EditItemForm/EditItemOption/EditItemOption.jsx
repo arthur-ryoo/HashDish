@@ -1,11 +1,11 @@
 import React from 'react';
-import styles from './EditItemOption.module.css';
+import { Input } from '@material-ui/core';
 
 const EditItemOption = (props) => {
   return (
-    <tr className={styles.container} key={props.optionIdx}>
+    <tr className={''} key={props.optionIdx}>
       <td>
-        <input
+        <Input
           data-opt-type={props.optionType}
           data-category-idx={props.optCatIdx}
           data-opt-idx={props.optionIdx}
@@ -17,7 +17,7 @@ const EditItemOption = (props) => {
         />
       </td>
       <td>
-        <input
+        <Input
           data-opt-type={props.optionType}
           data-category-idx={props.optCatIdx}
           data-opt-idx={props.optionIdx}
@@ -29,7 +29,7 @@ const EditItemOption = (props) => {
         />
       </td>
       <td>
-        <input
+        <Input
           data-opt-type={props.optionType}
           data-category-idx={props.optCatIdx}
           data-opt-idx={props.optionIdx}
@@ -41,7 +41,7 @@ const EditItemOption = (props) => {
         />
       </td>
       <td>
-        <input
+        <Input
           data-opt-type={props.optionType}
           data-category-idx={props.optCatIdx}
           data-opt-idx={props.optionIdx}
@@ -56,7 +56,7 @@ const EditItemOption = (props) => {
           onChange={props.handleOptionChange}
         />
       </td>
-      <td className={styles.delete}>
+      <td className={''}>
         <button
           data-opt-type={props.optionType}
           data-category-idx={props.optCatIdx}

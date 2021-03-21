@@ -8,6 +8,7 @@ import {
   DialogContent,
   DialogTitle,
   CircularProgress,
+  Typography,
 } from '@material-ui/core';
 import { axiosApiInstance as API } from '../../../utils/axiosConfig';
 
@@ -446,7 +447,12 @@ class EditMenuItem extends Component {
       >
         <Dialog open={true}>
           <DialogTitle>
-            {this.props.item ? 'Update' : 'Add'} Item
+            <Typography variant="h5">
+              {this.props.item ? 'Update Item: ' : 'Add Item'}
+              <span style={{ fontStyle: 'italic' }}>
+                {this.props.item ? this.props.item.name : ''}
+              </span>
+            </Typography>
           </DialogTitle>
           <DialogContent>
             <EditItemDescription

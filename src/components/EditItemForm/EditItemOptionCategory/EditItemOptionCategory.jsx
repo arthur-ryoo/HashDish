@@ -8,6 +8,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import useStyles from './EditItemOptionCategoryStyles';
 
 const EditItemOptionCategory = (props) => {
   return (

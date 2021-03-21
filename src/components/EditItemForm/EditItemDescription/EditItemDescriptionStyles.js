@@ -1,19 +1,18 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    margin: '1rem',
-  },
   container: {
     display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'column',
-    margin: '1rem',
-    padding: '1rem',
-    backgroundColor: '#FFFFFF',
+    flexDirection: 'column'
   },
-  title: {
-    marginBottom: '.5rem',
+  field: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginBottom: '0.5rem',
+  },
+  label: {
+    fontWeight: '800',
+    marginBottom: '0.25rem',
   },
   image: {
     width: '90%',
@@ -25,13 +24,6 @@ const useStyles = makeStyles((theme) => ({
     },
     margin: '1rem 0rem',
   },
-  description: {
-    fontStyle: 'italic',
-    marginBottom: '.25rem'
-  },
-  price: {
-    fontWeight: '900',
-  }
 }));
 
 export default useStyles;

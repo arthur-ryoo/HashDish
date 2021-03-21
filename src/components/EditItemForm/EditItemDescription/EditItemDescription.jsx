@@ -4,88 +4,107 @@ import {
   Typography,
   AccordionSummary,
   AccordionDetails,
+  Input,
+  Container,
+  TextareaAutosize,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import styles from './EditItemDescription.module.css';
-import classes from './EditItemDescription.module.css';
+import useStyles from './EditItemDescriptionStyles';
 
 const EditItemDescription = (props) => {
+  const classes = useStyles();
+  const {
+    itemName,
+    menuCats,
+    itemImage,
+    itemDescription,
+    itemPrice,
+    itemCategory,
+    handleChange,
+    handleImageChange,
+  } = props;
   return (
-    <div className={styles.title}>
+    <Container>
       <Accordion defaultExpanded={true}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography className={classes.heading}>
-            Item Description
-          </Typography>
+          <Typography variant="h6">Item Description</Typography>
         </AccordionSummary>
-        <AccordionDetails>
-          <div className={styles.description}>
-            <div className={styles.field}>
-              <label>Item Name</label>
-              <input
-                name="name"
-                type="text"
-                value={props.itemName}
-                onChange={props.handleChange}
-              />
-            </div>
-            <div className={styles.field}>
-              <label>Category</label>
-              <input
-                type="text"
-                list="categories"
-                name="category"
-                defaultValue={
-                  props.itemCategory ? props.itemCategory : ''
-                }
-                onChange={props.handleChange}
-              />
-              <datalist id="categories">
-                {props.menuCats.map((category, idx) => (
-                  <option name="category" value={category} key={idx}>
-                    {category}
-                  </option>
-                ))}
-              </datalist>
-            </div>
-            <div className={styles.field}>
-              <label>Item Description</label>
-              <textarea
-                name="description"
-                type="text"
-                rows={5}
-                value={props.itemDescription}
-                onChange={props.handleChange}
-              />
-            </div>
-            <div className={styles.field}>
-              <label>Item Price</label>
-              <input
-                name="price"
-                type="text"
-                value={props.itemPrice}
-                onChange={props.handleChange}
-              />
-            </div>
+        <AccordionDetails className={classes.container}>
+          <div className={classes.field}>
+            <Typography className={classes.label}>
+              Item Name
+            </Typography>
+            <Input
+              name="name"
+              type="text"
+              value={itemName}
+              onChange={handleChange}
+            />
           </div>
-          <div className={styles.image}>
-            <label>Item Image</label>
-            {props.itemImage && (
-              <img src={props.itemImage} alt="menu item" />
+          <div className={classes.field}>
+            <Typography className={classes.label}>
+              Category
+            </Typography>
+            <Input
+              type="text"
+              list="categories"
+              name="category"
+              defaultValue={itemCategory ? itemCategory : ''}
+              onChange={handleChange}
+            />
+            <datalist id="categories">
+              {menuCats.map((category, idx) => (
+                <option name="category" value={category} key={idx}>
+                  {category}
+                </option>
+              ))}
+            </datalist>
+          </div>
+          <div className={classes.field}>
+            <Typography className={classes.label}>
+              Description
+            </Typography>
+            <TextareaAutosize
+              aria-label="item description"
+              placeholder="Type description here"
+              name="description"
+              type="text"
+              rows={5}
+              value={itemDescription}
+              onChange={handleChange}
+            />
+          </div>
+          <div className={classes.field}>
+            <Typography className={classes.label}>Price</Typography>
+            <Input
+              name="price"
+              type="text"
+              value={itemPrice}
+              onChange={handleChange}
+            />
+          </div>
+          <div className={classes.field}>
+            <Typography className={classes.label}>Image</Typography>
+            {itemImage && (
+              <img
+                className={classes.image}
+                src={itemImage}
+                alt="menu item"
+              />
             )}
-            <input
+            <Input
               id="image"
               name="image"
               type="file"
               accept="image/*"
               width="50"
               height="50"
-              onChange={props.handleImageChange}
+              onChange={handleImageChange}
             />
           </div>
         </AccordionDetails>
       </Accordion>
-    </div>
+    </Container>
   );
 };
 

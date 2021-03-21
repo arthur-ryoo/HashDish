@@ -37,10 +37,13 @@ const ViewMenuItem = (props) => {
             className={classes.image}
           />
         )}
-        <Typography className={classes.description} variant={'p'}>
+        <Typography
+          className={classes.description}
+          variant={'caption'}
+        >
           {description}
         </Typography>
-        <Typography className={classes.price} variant={'p'}>
+        <Typography className={classes.price} variant={'caption'}>
           {price}
         </Typography>
       </div>
@@ -49,7 +52,7 @@ const ViewMenuItem = (props) => {
         <Dialog open={true}>
           <DialogTitle>{name}</DialogTitle>
           <DialogContent>
-            <Typography variant={'p'}>
+            <Typography variant={'body1'}>
               Are you sure you want to delete item?
             </Typography>
           </DialogContent>
