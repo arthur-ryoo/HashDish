@@ -203,7 +203,7 @@ class EditMenuItem extends Component {
 
   handleOptionChange = (e) => {
     console.log('option change');
-    switch (e.target.name) {
+    switch (e.currentTarget.name) {
       case 'moveOptCatForward':
         this.moveOptCatForward(e.target);
         break;
@@ -214,7 +214,7 @@ class EditMenuItem extends Component {
         this.addOptCat(e.target);
         break;
       case 'deleteOptCat':
-        this.deleteOptCat(e.target);
+        this.deleteOptCat(e.currentTarget.dataset);
         break;
       case 'editOptCat':
         this.editOptCat(e.target);
@@ -229,7 +229,7 @@ class EditMenuItem extends Component {
         this.editOption(e.target);
         break;
       default:
-        console.log(`Option Change Error: ${e.target}`);
+        console.log(e.currentTarget.dataset.optType);
         break;
     }
   };
@@ -305,9 +305,10 @@ class EditMenuItem extends Component {
         });
   };
 
-  deleteOptCat = (target) => {
-    const optCatIdx = target.getAttribute('data-category-idx');
-    const optionType = target.getAttribute('data-opt-type');
+  deleteOptCat = (dataset) => {
+    console.log(dataset);
+    const optCatIdx = dataset.categoryIdx;
+    const optionType = dataset.optType;
 
     if (optionType === 'requiredOptions') {
       this.setState({

@@ -1,11 +1,12 @@
 import React from 'react';
-import { Input } from '@material-ui/core';
+import useStyles from './EditItemOptionStyles';
 
 const EditItemOption = (props) => {
+  const classes = useStyles();
   return (
-    <tr className={''} key={props.optionIdx}>
+    <tr key={props.optionIdx} className={classes.container}>
       <td>
-        <Input
+        <input
           data-opt-type={props.optionType}
           data-category-idx={props.optCatIdx}
           data-opt-idx={props.optionIdx}
@@ -17,7 +18,7 @@ const EditItemOption = (props) => {
         />
       </td>
       <td>
-        <Input
+        <input
           data-opt-type={props.optionType}
           data-category-idx={props.optCatIdx}
           data-opt-idx={props.optionIdx}
@@ -29,7 +30,7 @@ const EditItemOption = (props) => {
         />
       </td>
       <td>
-        <Input
+        <input
           data-opt-type={props.optionType}
           data-category-idx={props.optCatIdx}
           data-opt-idx={props.optionIdx}
@@ -41,7 +42,7 @@ const EditItemOption = (props) => {
         />
       </td>
       <td>
-        <Input
+        <input
           data-opt-type={props.optionType}
           data-category-idx={props.optCatIdx}
           data-opt-idx={props.optionIdx}
