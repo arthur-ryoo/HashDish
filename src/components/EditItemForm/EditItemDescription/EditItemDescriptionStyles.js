@@ -1,6 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
+  root:{
+    padding: '0rem',
+    marginBottom: '1rem'
+  },
   container: {
     display: 'flex',
     flexDirection: 'column'
@@ -10,9 +14,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     marginBottom: '0.5rem',
   },
-  label: {
-    fontWeight: '800',
-    marginBottom: '0.25rem',
+  input: {
+    marginBottom: '0.75rem',
   },
   image: {
     width: '90%',

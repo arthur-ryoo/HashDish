@@ -7,6 +7,7 @@ import {
   Input,
   Container,
   TextareaAutosize,
+  InputLabel,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import useStyles from './EditItemDescriptionStyles';
@@ -24,17 +25,16 @@ const EditItemDescription = (props) => {
     handleImageChange,
   } = props;
   return (
-    <Container>
+    <Container className={classes.root}>
       <Accordion defaultExpanded={true}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography variant="h6">Item Description</Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.container}>
           <div className={classes.field}>
-            <Typography className={classes.label}>
-              Item Name
-            </Typography>
+            <InputLabel>Item Name</InputLabel>
             <Input
+              className={classes.input}
               name="name"
               type="text"
               value={itemName}
@@ -42,10 +42,9 @@ const EditItemDescription = (props) => {
             />
           </div>
           <div className={classes.field}>
-            <Typography className={classes.label}>
-              Category
-            </Typography>
+            <InputLabel>Category</InputLabel>
             <Input
+              className={classes.input}
               type="text"
               list="categories"
               name="category"
@@ -61,10 +60,9 @@ const EditItemDescription = (props) => {
             </datalist>
           </div>
           <div className={classes.field}>
-            <Typography className={classes.label}>
-              Description
-            </Typography>
+            <InputLabel>Description</InputLabel>
             <TextareaAutosize
+              className={classes.input}
               aria-label="item description"
               placeholder="Type description here"
               name="description"
@@ -75,8 +73,9 @@ const EditItemDescription = (props) => {
             />
           </div>
           <div className={classes.field}>
-            <Typography className={classes.label}>Price</Typography>
+            <InputLabel>Price</InputLabel>
             <Input
+              className={classes.input}
               name="price"
               type="text"
               value={itemPrice}
@@ -84,7 +83,7 @@ const EditItemDescription = (props) => {
             />
           </div>
           <div className={classes.field}>
-            <Typography className={classes.label}>Image</Typography>
+            <InputLabel>Image</InputLabel>
             {itemImage && (
               <img
                 className={classes.image}
@@ -93,6 +92,7 @@ const EditItemDescription = (props) => {
               />
             )}
             <Input
+              className={classes.input}
               id="image"
               name="image"
               type="file"

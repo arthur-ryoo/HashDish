@@ -9,6 +9,7 @@ import {
   DialogTitle,
   CircularProgress,
   Typography,
+  Container,
 } from '@material-ui/core';
 import { axiosApiInstance as API } from '../../../utils/axiosConfig';
 
@@ -211,7 +212,7 @@ class EditMenuItem extends Component {
         this.moveOptCatBackward(e.target);
         break;
       case 'addOptCat':
-        this.addOptCat(e.target);
+        this.addOptCat(e.currentTarget.dataset);
         break;
       case 'deleteOptCat':
         this.deleteOptCat(e.currentTarget.dataset);
@@ -282,8 +283,8 @@ class EditMenuItem extends Component {
     }
   };
 
-  addOptCat = (target) => {
-    const optionType = target.getAttribute('data-opt-type');
+  addOptCat = (dataset) => {
+    const optionType = dataset.optType;
     const newCategory = {
       name: '',
       option_type: 'checkbox',
@@ -442,7 +443,7 @@ class EditMenuItem extends Component {
 
   render() {
     return (
-      <section
+      <Container
         id={this.props.item ? this.props.item.menuId : 'newItem'}
         key={this.props.item ? this.props.item.menuId : 'newItem'}
       >
@@ -455,7 +456,7 @@ class EditMenuItem extends Component {
               </span>
             </Typography>
           </DialogTitle>
-          <DialogContent>
+          <DialogContent style={{ backgroundColor: '#E0E2DB' }}>
             <EditItemDescription
               menuCats={this.props.menuCats}
               itemName={this.state.name}
@@ -505,7 +506,7 @@ class EditMenuItem extends Component {
             />
           </DialogActions>
         </Dialog>
-      </section>
+      </Container>
     );
   }
 }
