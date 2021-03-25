@@ -9,9 +9,7 @@ import {
   Button,
   IconButton,
   Input,
-  MenuItem,
   InputLabel,
-  Select,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import useStyles from './EditItemOptionCategoryStyles';
@@ -51,30 +49,32 @@ const EditItemOptionCategory = (props) => {
                         <div className={classes.description}>
                           <InputLabel>Category Name</InputLabel>
                           <Input
-                            data-prop-name="name"
-                            data-category-idx={optCatIdx}
-                            data-opt-type={props.optionType}
+                            inputProps={{
+                              'data-prop-name': 'name',
+                              'data-category-idx': optCatIdx,
+                              'data-opt-type': props.optionType,
+                            }}
                             name="editOptCat"
                             type="text"
                             value={optionCategory.name}
                             onChange={props.handleOptionChange}
                             className={classes.input}
                           />
-                          <InputLabel>Option Type</InputLabel>
-                          <Select
+                          <InputLabel className={classes.label}>
+                            Option Type
+                          </InputLabel>
+                          <select
                             data-prop-name="option_type"
                             data-category-idx={optCatIdx}
                             data-opt-type={props.optionType}
-                            name="editOptCat"
+                            name={'editOptCat'}
                             value={optionCategory.option_type}
                             onChange={props.handleOptionChange}
                             className={classes.input}
                           >
-                            <MenuItem value="radio">radio</MenuItem>
-                            <MenuItem value="checkbox">
-                              checkbox
-                            </MenuItem>
-                          </Select>
+                            <option value="radio">radio</option>
+                            <option value="checkbox">checkbox</option>
+                          </select>
                         </div>
                         <div className={classes.buttons}>
                           <IconButton

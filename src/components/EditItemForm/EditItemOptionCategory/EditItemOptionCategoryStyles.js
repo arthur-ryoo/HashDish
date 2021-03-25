@@ -34,7 +34,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   input: {
-    marginBottom: '0.25rem',
+    marginBottom: '0.5rem',
+  },
+  label: {
+    marginBottom: '0.5rem',
   },
   buttons: {
     display: 'flex',

@@ -204,12 +204,13 @@ class EditMenuItem extends Component {
 
   handleOptionChange = (e) => {
     console.log('option change');
+    console.log(e);
     switch (e.currentTarget.name) {
       case 'moveOptCatForward':
-        this.moveOptCatForward(e.target);
+        this.moveOptCatForward(e.currentTarget.dataset);
         break;
       case 'moveOptCatBackward':
-        this.moveOptCatBackward(e.target);
+        this.moveOptCatBackward(e.currentTarget.dataset);
         break;
       case 'addOptCat':
         this.addOptCat(e.currentTarget.dataset);
@@ -218,19 +219,19 @@ class EditMenuItem extends Component {
         this.deleteOptCat(e.currentTarget.dataset);
         break;
       case 'editOptCat':
-        this.editOptCat(e.target);
+        this.editOptCat(e.currentTarget);
         break;
       case 'addOption':
-        this.addOption(e.target);
+        this.addOption(e.currentTarget.dataset);
         break;
       case 'deleteOption':
-        this.deleteOption(e.target);
+        this.deleteOption(e.currentTarget.dataset);
         break;
       case 'editOption':
-        this.editOption(e.target);
+        this.editOption(e.currentTarget.dataset);
         break;
       default:
-        console.log(e.currentTarget.dataset.optType);
+        console.log(e);
         break;
     }
   };
@@ -327,9 +328,9 @@ class EditMenuItem extends Component {
   };
 
   editOptCat = (target) => {
-    const optCatKey = target.getAttribute('data-prop-name');
-    const optCatIdx = target.getAttribute('data-category-idx');
-    const optionType = target.getAttribute('data-opt-type');
+    const optCatKey = target.dataset.propName;
+    const optCatIdx = target.dataset.categoryIdx;
+    const optionType = target.dataset.optType;
 
     let newCatObj =
       optionType === 'requiredOptions'
@@ -449,7 +450,7 @@ class EditMenuItem extends Component {
       >
         <Dialog open={true}>
           <DialogTitle>
-            <Typography variant="h5">
+            <Typography>
               {this.props.item ? 'Update Item: ' : 'Add Item'}
               <span style={{ fontStyle: 'italic' }}>
                 {this.props.item ? this.props.item.name : ''}
