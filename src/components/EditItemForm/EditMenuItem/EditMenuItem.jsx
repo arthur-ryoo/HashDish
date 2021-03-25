@@ -204,7 +204,6 @@ class EditMenuItem extends Component {
 
   handleOptionChange = (e) => {
     console.log('option change');
-    console.log(e);
     switch (e.currentTarget.name) {
       case 'moveOptCatForward':
         this.moveOptCatForward(e.currentTarget.dataset);
@@ -236,11 +235,9 @@ class EditMenuItem extends Component {
     }
   };
 
-  moveOptCatForward = (target) => {
-    const optCatIdx = Number(
-      target.getAttribute('data-category-idx'),
-    );
-    const optionType = target.getAttribute('data-opt-type');
+  moveOptCatForward = (dataset) => {
+    const optCatIdx = Number(dataset.categoryIdx);
+    const optionType = dataset.optType;
 
     let newArray =
       optionType === 'requiredOptions'
@@ -260,11 +257,9 @@ class EditMenuItem extends Component {
     }
   };
 
-  moveOptCatBackward = (target) => {
-    const optCatIdx = Number(
-      target.getAttribute('data-category-idx'),
-    );
-    const optionType = target.getAttribute('data-opt-type');
+  moveOptCatBackward = (dataset) => {
+    const optCatIdx = Number(dataset.categoryIdx);
+    const optionType = dataset.optType;
 
     let newArray =
       optionType === 'requiredOptions'
@@ -308,7 +303,6 @@ class EditMenuItem extends Component {
   };
 
   deleteOptCat = (dataset) => {
-    console.log(dataset);
     const optCatIdx = dataset.categoryIdx;
     const optionType = dataset.optType;
 
