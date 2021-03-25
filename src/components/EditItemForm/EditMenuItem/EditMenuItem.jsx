@@ -354,11 +354,9 @@ class EditMenuItem extends Component {
     }
   };
 
-  addOption = (target) => {
-    const optCatIdx = Number(
-      target.getAttribute('data-category-idx'),
-    );
-    const optionType = target.getAttribute('data-opt-type');
+  addOption = (dataset) => {
+    const optCatIdx = Number(dataset.categoryIdx);
+    const optionType = dataset.optType;
     const newOption = {
       default: false,
       name: '',
@@ -377,12 +375,10 @@ class EditMenuItem extends Component {
       : this.setState({ optionalOptions: newArray });
   };
 
-  deleteOption = (target) => {
-    const optCatIdx = Number(
-      target.getAttribute('data-category-idx'),
-    );
-    const optionIdx = Number(target.getAttribute('data-opt-idx'));
-    const optionType = target.getAttribute('data-opt-type');
+  deleteOption = (dataset) => {
+    const optCatIdx = Number(dataset.categoryIdx);
+    const optionIdx = Number(dataset.optIdx);
+    const optionType = dataset.optType;
 
     let newArray =
       optionType === 'requiredOptions'
