@@ -11,7 +11,7 @@ import styles from './RestMenu.module.css';
 
 const Menu = (props) => {
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="md">
       {props.myKitchen === null ? (
         <Redirect to="/" />
       ) : (
