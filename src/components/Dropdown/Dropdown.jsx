@@ -1,66 +1,54 @@
-import React, { Fragment, Component } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Dropdown.module.css';
+import {
+  isLoggedIn,
+  isNotLoggedIn,
+} from './DropdownItems/DropdownItems';
 
-class Dropdown extends Component {
-  state = this.getInitialState();
+function Dropdown(props) {
+  const [loggedIn] = useState(props.user);
+  const [listOpen, setListOpen] = useState(false);
 
-  getInitialState() {
-    return {
-      user: this.props.user,
-      listOpen: false,
-    };
-  }
-
-  handleDropdown = (e) => {
-    e.preventDefault();
-    this.state.listOpen
-      ? this.setState({ listOpen: false })
-      : this.setState({ listOpen: true });
+  const handleDropdown = (e) => {
+    setListOpen(!listOpen);
+    if (e.target.id === 'logout') props.handleLogout();
   };
 
-  handleDropdownClick = (e) => {
-    e.preventDefault();
-    if (e.target.id === 'logout') {
-      this.props.handleLogout();
-    }
-    this.setState({ listOpen: false });
-  };
-
-  render() {
-    return (
-      <div className={styles.wrapper}>
-        <button
-          className={styles.button}
-          onClick={this.handleDropdown}
-        >
-          <i className="fa fa-bars"></i>
-        </button>
-        {this.state.listOpen ? (
-          <div className={styles.list}>
-            {this.props.user ? (
-              <Fragment>
-                <Link to="/menu">Menu</Link>
-                <Link to="/profile">Profile</Link>
-                <Link
-                  to="/"
-                  id="logout"
-                  onClick={this.props.handleLogout}
-                >
-                  Log Out
-                </Link>
-              </Fragment>
-            ) : (
-              <Fragment>
-                <Link to="/login">Log In</Link>
-                <Link to="/signup">Sign Up</Link>
-              </Fragment>
-            )}
-          </div>
-        ) : null}
-      </div>
-    );
-  }
+  return (
+    <div className={styles.wrapper} onBlur={handleDropdown}>
+      <button className={styles.button} onClick={handleDropdown}>
+        <i className="fa fa-bars"></i>
+      </button>
+      {listOpen ? (
+        <div className={styles.list}>
+          {props.user && loggedIn ? (
+            <ul className={styles.test}>
+              {isLoggedIn.map((item, index) => {
+                return (
+                  <li key={index} onClick={handleDropdown}>
+                    <Link id={item.id} to={item.url}>
+                      {item.title}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <ul className={styles.test}>
+              {isNotLoggedIn.map((item, index) => {
+                return (
+                  <li key={index} onClick={handleDropdown}>
+                    <Link to={item.url}>{item.title}</Link>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
+      ) : null}
+    </div>
+  );
 }
 
 export default Dropdown;
