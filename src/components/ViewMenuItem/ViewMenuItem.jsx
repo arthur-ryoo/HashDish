@@ -7,6 +7,7 @@ import {
   DialogContent,
   DialogTitle,
 } from '@material-ui/core';
+import defaultImage from '../../assets/no-product-image-400x400.png';
 
 let STORAGE_URL = 'https://homecookimages.blob.core.windows.net/';
 if (process.env.NODE_ENV === 'production') {
@@ -20,31 +21,50 @@ class ViewMenuItem extends Component {
   };
 
   render() {
-    const { menuId } = this.props.item;
+    const {
+      menuId,
+      name,
+      pictureKey,
+      description,
+      price,
+    } = this.props.item;
+
+    const {
+      delMenu,
+      idx,
+      handleDelMenu,
+      handleMenuItemDelete,
+      handleMenuItemEdit,
+    } = this.props;
+
+    const maxLength = 125;
+
     return (
-      <section
-        id={this.props.item.menuId}
-        key={this.props.item.menuId}
-        className={styles.item}
-      >
+      <section id={menuId} key={menuId} className={styles.item}>
         <div className={styles.title}>
-          <h3>{this.props.item.name}</h3>
-          {this.props.item.pictureKey && (
+          <h3>{name}</h3>
+          {pictureKey ? (
             <img
-              src={`${STORAGE_URL}pictures/${this.props.item.pictureKey}.jpg`}
+              src={`${STORAGE_URL}pictures/${pictureKey}.jpg`}
               alt="menu item"
             />
+          ) : (
+            <img src={defaultImage} alt="menu item" />
           )}
         </div>
         <div className={styles.description}>
-          <p>{this.props.item.description}</p>
+          {description && description.length > maxLength ? (
+            <p>{description.substring(0, maxLength)}...</p>
+          ) : (
+            <p>{description}</p>
+          )}
         </div>
         <div className={styles.price}>
-          <p>{this.props.item.price}</p>
+          <p>{price}</p>
         </div>
-        {this.props.delMenu === this.props.item.menuId ? (
+        {delMenu === menuId ? (
           <Dialog open={true}>
-            <DialogTitle>{this.props.item.name}</DialogTitle>
+            <DialogTitle>{name}</DialogTitle>
             <DialogContent>
               <p>Are you sure you want to delete this item?</p>
             </DialogContent>
@@ -52,28 +72,28 @@ class ViewMenuItem extends Component {
               <AdminButtons
                 submitId=""
                 submitTitle="Cancel"
-                cancelId={this.props.item.menuId}
+                cancelId={menuId}
                 cancelTitle="Yes, Delete"
                 submitFunction={() => {
-                  this.props.handleDelMenu(null);
+                  handleDelMenu(null);
                 }}
                 cancelFunction={() => {
-                  this.props.handleMenuItemDelete(menuId);
+                  handleMenuItemDelete(menuId);
                 }}
               />
             </DialogActions>
           </Dialog>
         ) : (
           <AdminButtons
-            submitId={this.props.item.menuId}
+            submitId={menuId}
             submitTitle="Edit"
-            cancelId={this.props.item.menuId}
+            cancelId={menuId}
             cancelTitle="Delete"
             submitFunction={() => {
-              this.props.handleMenuItemEdit(this.props.idx);
+              handleMenuItemEdit(idx);
             }}
             cancelFunction={() => {
-              this.props.handleDelMenu(menuId);
+              handleDelMenu(menuId);
             }}
           />
         )}
