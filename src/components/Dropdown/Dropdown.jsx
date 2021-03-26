@@ -16,7 +16,7 @@ function Dropdown(props) {
   };
 
   return (
-    <div className={styles.wrapper} onBlur={handleDropdown}>
+    <div className={styles.wrapper}>
       <button className={styles.button} onClick={handleDropdown}>
         <i className="fa fa-bars"></i>
       </button>
