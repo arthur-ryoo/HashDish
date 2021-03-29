@@ -227,7 +227,7 @@ class EditMenuItem extends Component {
         this.deleteOption(e.currentTarget.dataset);
         break;
       case 'editOption':
-        this.editOption(e.currentTarget.dataset);
+        this.editOption(e.currentTarget);
         break;
       default:
         console.log(e);
@@ -393,10 +393,10 @@ class EditMenuItem extends Component {
   };
 
   editOption = (target) => {
-    const optionKey = target.getAttribute('data-prop-name');
-    const optCatIdx = target.getAttribute('data-category-idx');
-    const optionIdx = target.getAttribute('data-opt-idx');
-    const optionType = target.getAttribute('data-opt-type');
+    const optionKey = target.dataset.propName;
+    const optCatIdx = target.dataset.categoryIdx;
+    const optionIdx = target.dataset.optIdx;
+    const optionType = target.dataset.optType;
     const value =
       target.type === 'checkbox' ? target.checked : target.value;
 

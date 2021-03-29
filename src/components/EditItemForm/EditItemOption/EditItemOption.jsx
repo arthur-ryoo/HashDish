@@ -1,16 +1,20 @@
 import React from 'react';
 import useStyles from './EditItemOptionStyles';
+import { Input, IconButton } from '@material-ui/core';
+import { Delete } from '@material-ui/icons';
 
 const EditItemOption = (props) => {
   const classes = useStyles();
   return (
     <tr key={props.optionIdx} className={classes.container}>
       <td>
-        <input
-          data-opt-type={props.optionType}
-          data-category-idx={props.optCatIdx}
-          data-opt-idx={props.optionIdx}
-          data-prop-name="name"
+        <Input
+          inputProps={{
+            'data-opt-type': props.optionType,
+            'data-category-idx': props.optCatIdx,
+            'data-opt-idx': props.optionIdx,
+            'data-prop-name': 'name',
+          }}
           name="editOption"
           type="text"
           value={props.option.name}
@@ -18,11 +22,13 @@ const EditItemOption = (props) => {
         />
       </td>
       <td>
-        <input
-          data-opt-type={props.optionType}
-          data-category-idx={props.optCatIdx}
-          data-opt-idx={props.optionIdx}
-          data-prop-name="price"
+        <Input
+          inputProps={{
+            'data-opt-type': props.optionType,
+            'data-category-idx': props.optCatIdx,
+            'data-opt-idx': props.optionIdx,
+            'data-prop-name': 'price',
+          }}
           name="editOption"
           type="text"
           value={`${props.option.price || ''}`}
@@ -30,11 +36,13 @@ const EditItemOption = (props) => {
         />
       </td>
       <td>
-        <input
-          data-opt-type={props.optionType}
-          data-category-idx={props.optCatIdx}
-          data-opt-idx={props.optionIdx}
-          data-prop-name="default"
+        <Input
+          inputProps={{
+            'data-opt-type': props.optionType,
+            'data-category-idx': props.optCatIdx,
+            'data-opt-idx': props.optionIdx,
+            'data-prop-name': 'default',
+          }}
           name="editOption"
           type="checkbox"
           checked={props.option.default}
@@ -42,11 +50,13 @@ const EditItemOption = (props) => {
         />
       </td>
       <td>
-        <input
-          data-opt-type={props.optionType}
-          data-category-idx={props.optCatIdx}
-          data-opt-idx={props.optionIdx}
-          data-prop-name="availability"
+        <Input
+          inputProps={{
+            'data-opt-type': props.optionType,
+            'data-category-idx': props.optCatIdx,
+            'data-opt-idx': props.optionIdx,
+            'data-prop-name': 'availability',
+          }}
           name="editOption"
           type="checkbox"
           checked={
@@ -58,7 +68,17 @@ const EditItemOption = (props) => {
         />
       </td>
       <td className={''}>
-        <button
+        <IconButton
+          color="secondary"
+          data-opt-type={props.optionType}
+          data-category-idx={props.optCatIdx}
+          data-opt-idx={props.optionIdx}
+          name="deleteOption"
+          onClick={props.handleOptionChange}
+        >
+          <Delete />
+        </IconButton>
+        {/* <button
           data-opt-type={props.optionType}
           data-category-idx={props.optCatIdx}
           data-opt-idx={props.optionIdx}
@@ -66,7 +86,7 @@ const EditItemOption = (props) => {
           onClick={props.handleOptionChange}
         >
           -
-        </button>
+        </button> */}
       </td>
     </tr>
   );
