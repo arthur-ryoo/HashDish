@@ -12,8 +12,26 @@
   width: 45%;
 }
 
+@media (max-width: 500px) {
+  .item {
+    width: 100%;
+  }
+}
+
 .description {
   font-style: italic;
+  height: 135px;
+  font-size: 1rem;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+}
+
+@media (max-width: 500px) {
+  .description {
+    height: 100px;
+  }
 }
 
 .options {
@@ -69,6 +87,12 @@
   font-weight: 900;
 }
 
+@media (max-width: 1024px) {
+  .price p {
+    padding-top: 30px;
+  }
+}
+
 .del button {
   margin-left: 1rem;
   border-radius: 10px;
@@ -91,9 +115,29 @@
 }
 
 .title h3 {
+  font-size: 1.25rem;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 0.0075em;
   border-bottom: #211103 solid 2px;
 }
 
 .title img {
-  max-width: 66%;
+  width: 375px;
+  height: 375px;
+}
+
+@media (max-width: 500px) {
+  .title img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .title img {
+    width: 284px;
+    height: 284px;
+  }
 }
