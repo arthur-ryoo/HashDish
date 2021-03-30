@@ -1,0 +1,143 @@
+.item {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding: 1rem;
+  color: #211103;
+  background-color: #f9f8f8;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px #888888;
+  align-items: flex-start;
+  margin: 0.5rem;
+  width: 45%;
+}
+
+@media (max-width: 500px) {
+  .item {
+    width: 100%;
+  }
+}
+
+.description {
+  font-style: italic;
+  height: 135px;
+  font-size: 1rem;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+}
+
+@media (max-width: 500px) {
+  .description {
+    height: 100px;
+  }
+}
+
+.options {
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  width: 95%;
+}
+
+.admin {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.admindel {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #f6f4d2;
+  padding: 1rem;
+  border: solid #e0e2db 2px;
+  border-radius: 10px;
+}
+
+.admindel p {
+  margin-right: 2rem;
+}
+
+.admin div {
+  margin-left: 0.25rem;
+}
+
+.admin button {
+  border-radius: 10px;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: none;
+  color: #f9f8f8;
+  background-color: #5cab7d;
+  box-shadow: 2px 2px 2px #888888;
+}
+
+.admin button:active {
+  background-color: green;
+  box-shadow: none;
+}
+
+.price {
+  width: 100%;
+}
+
+.price p {
+  font-weight: 900;
+}
+
+@media (max-width: 1024px) {
+  .price p {
+    padding-top: 30px;
+  }
+}
+
+.del button {
+  margin-left: 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: none;
+  color: #f9f8f8;
+  background-color: #a44a3f;
+  box-shadow: 2px 2px 2px #888888;
+}
+
+.del button:active {
+  background-color: #bf1a2f;
+  box-shadow: none;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+}
+
+.title h3 {
+  font-size: 1.25rem;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 0.0075em;
+  border-bottom: #211103 solid 2px;
+}
+
+.title img {
+  width: 375px;
+  height: 375px;
+}
+
+@media (max-width: 500px) {
+  .title img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .title img {
+    width: 284px;
+    height: 284px;
+  }
+}

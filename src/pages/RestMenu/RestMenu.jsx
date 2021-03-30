@@ -11,7 +11,7 @@ import EditMenuItem from '../../components/EditItemForm/EditMenuItem/EditMenuIte
 const Menu = (props) => {
   const classes = useStyles();
   return (
-    <Container className={classes.root} maxWidth={false}>
+    <Container maxWidth="md">
       {props.myKitchen === null ? (
         <Redirect to="/" />
       ) : (
