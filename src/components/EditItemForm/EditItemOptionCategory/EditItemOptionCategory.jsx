@@ -123,30 +123,20 @@ const EditItemOptionCategory = (props) => {
                     </div>
                     {optionCategory.options.length > 0 && (
                       <div>
-                        <table>
-                          <tbody>
-                            <tr>
-                              <th>Name</th>
-                              <th>Add-on Price</th>
-                              <th>Default</th>
-                              <th>Sold Out</th>
-                            </tr>
-                            {optionCategory.options.map(
-                              (option, optionIdx) => (
-                                <EditItemOption
-                                  key={optionIdx}
-                                  optionType={props.optionType}
-                                  option={option}
-                                  optCatIdx={optCatIdx}
-                                  optionIdx={optionIdx}
-                                  handleOptionChange={
-                                    props.handleOptionChange
-                                  }
-                                />
-                              ),
-                            )}
-                          </tbody>
-                        </table>
+                        {optionCategory.options.map(
+                          (option, optionIdx) => (
+                            <EditItemOption
+                              key={optionIdx}
+                              optionType={props.optionType}
+                              option={option}
+                              optCatIdx={optCatIdx}
+                              optionIdx={optionIdx}
+                              handleOptionChange={
+                                props.handleOptionChange
+                              }
+                            />
+                          ),
+                        )}
                       </div>
                     )}
                   </div>

@@ -16,7 +16,10 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '0.5rem',
   },
   interface: {
-    // border: 'green solid 3px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginBottom: '1rem',
   },
   add: {
     marginBottom: '1rem',
