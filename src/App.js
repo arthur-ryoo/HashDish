@@ -74,7 +74,9 @@ class App extends Component {
   };
 
   handleGetMenuCategories = (arr) => {
-    let catArr = arr.map((el) => el.category);
+    let catArr = arr.map((el) => (
+      el.status > -1 ? el.category : null
+    ));
     let uniqueCatsArr = [...new Set(catArr)];
     this.setState({ menuCats: uniqueCatsArr });
   };

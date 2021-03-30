@@ -8,6 +8,8 @@ import {
   DialogContent,
   DialogTitle,
   CircularProgress,
+  Typography,
+  Container,
 } from '@material-ui/core';
 import { axiosApiInstance as API } from '../../../utils/axiosConfig';
 
@@ -202,42 +204,40 @@ class EditMenuItem extends Component {
 
   handleOptionChange = (e) => {
     console.log('option change');
-    switch (e.target.name) {
+    switch (e.currentTarget.name) {
       case 'moveOptCatForward':
-        this.moveOptCatForward(e.target);
+        this.moveOptCatForward(e.currentTarget.dataset);
         break;
       case 'moveOptCatBackward':
-        this.moveOptCatBackward(e.target);
+        this.moveOptCatBackward(e.currentTarget.dataset);
         break;
       case 'addOptCat':
-        this.addOptCat(e.target);
+        this.addOptCat(e.currentTarget.dataset);
         break;
       case 'deleteOptCat':
-        this.deleteOptCat(e.target);
+        this.deleteOptCat(e.currentTarget.dataset);
         break;
       case 'editOptCat':
-        this.editOptCat(e.target);
+        this.editOptCat(e.currentTarget);
         break;
       case 'addOption':
-        this.addOption(e.target);
+        this.addOption(e.currentTarget.dataset);
         break;
       case 'deleteOption':
-        this.deleteOption(e.target);
+        this.deleteOption(e.currentTarget.dataset);
         break;
       case 'editOption':
-        this.editOption(e.target);
+        this.editOption(e.currentTarget);
         break;
       default:
-        console.log(`Option Change Error: ${e.target}`);
+        console.log(e);
         break;
     }
   };
 
-  moveOptCatForward = (target) => {
-    const optCatIdx = Number(
-      target.getAttribute('data-category-idx'),
-    );
-    const optionType = target.getAttribute('data-opt-type');
+  moveOptCatForward = (dataset) => {
+    const optCatIdx = Number(dataset.categoryIdx);
+    const optionType = dataset.optType;
 
     let newArray =
       optionType === 'requiredOptions'
@@ -257,11 +257,9 @@ class EditMenuItem extends Component {
     }
   };
 
-  moveOptCatBackward = (target) => {
-    const optCatIdx = Number(
-      target.getAttribute('data-category-idx'),
-    );
-    const optionType = target.getAttribute('data-opt-type');
+  moveOptCatBackward = (dataset) => {
+    const optCatIdx = Number(dataset.categoryIdx);
+    const optionType = dataset.optType;
 
     let newArray =
       optionType === 'requiredOptions'
@@ -281,8 +279,8 @@ class EditMenuItem extends Component {
     }
   };
 
-  addOptCat = (target) => {
-    const optionType = target.getAttribute('data-opt-type');
+  addOptCat = (dataset) => {
+    const optionType = dataset.optType;
     const newCategory = {
       name: '',
       option_type: 'checkbox',
@@ -304,9 +302,9 @@ class EditMenuItem extends Component {
         });
   };
 
-  deleteOptCat = (target) => {
-    const optCatIdx = target.getAttribute('data-category-idx');
-    const optionType = target.getAttribute('data-opt-type');
+  deleteOptCat = (dataset) => {
+    const optCatIdx = dataset.categoryIdx;
+    const optionType = dataset.optType;
 
     if (optionType === 'requiredOptions') {
       this.setState({
@@ -324,9 +322,9 @@ class EditMenuItem extends Component {
   };
 
   editOptCat = (target) => {
-    const optCatKey = target.getAttribute('data-prop-name');
-    const optCatIdx = target.getAttribute('data-category-idx');
-    const optionType = target.getAttribute('data-opt-type');
+    const optCatKey = target.dataset.propName;
+    const optCatIdx = target.dataset.categoryIdx;
+    const optionType = target.dataset.optType;
 
     let newCatObj =
       optionType === 'requiredOptions'
@@ -356,11 +354,9 @@ class EditMenuItem extends Component {
     }
   };
 
-  addOption = (target) => {
-    const optCatIdx = Number(
-      target.getAttribute('data-category-idx'),
-    );
-    const optionType = target.getAttribute('data-opt-type');
+  addOption = (dataset) => {
+    const optCatIdx = Number(dataset.categoryIdx);
+    const optionType = dataset.optType;
     const newOption = {
       default: false,
       name: '',
@@ -379,12 +375,10 @@ class EditMenuItem extends Component {
       : this.setState({ optionalOptions: newArray });
   };
 
-  deleteOption = (target) => {
-    const optCatIdx = Number(
-      target.getAttribute('data-category-idx'),
-    );
-    const optionIdx = Number(target.getAttribute('data-opt-idx'));
-    const optionType = target.getAttribute('data-opt-type');
+  deleteOption = (dataset) => {
+    const optCatIdx = Number(dataset.categoryIdx);
+    const optionIdx = Number(dataset.optIdx);
+    const optionType = dataset.optType;
 
     let newArray =
       optionType === 'requiredOptions'
@@ -399,10 +393,10 @@ class EditMenuItem extends Component {
   };
 
   editOption = (target) => {
-    const optionKey = target.getAttribute('data-prop-name');
-    const optCatIdx = target.getAttribute('data-category-idx');
-    const optionIdx = target.getAttribute('data-opt-idx');
-    const optionType = target.getAttribute('data-opt-type');
+    const optionKey = target.dataset.propName;
+    const optCatIdx = target.dataset.categoryIdx;
+    const optionIdx = target.dataset.optIdx;
+    const optionType = target.dataset.optType;
     const value =
       target.type === 'checkbox' ? target.checked : target.value;
 
@@ -440,15 +434,20 @@ class EditMenuItem extends Component {
 
   render() {
     return (
-      <section
+      <Container
         id={this.props.item ? this.props.item.menuId : 'newItem'}
         key={this.props.item ? this.props.item.menuId : 'newItem'}
       >
         <Dialog open={true}>
           <DialogTitle>
-            {this.props.item ? 'Update' : 'Add'} Item
+            <Typography>
+              {this.props.item ? 'Update Item: ' : 'Add Item'}
+              <span style={{ fontStyle: 'italic' }}>
+                {this.props.item ? this.props.item.name : ''}
+              </span>
+            </Typography>
           </DialogTitle>
-          <DialogContent>
+          <DialogContent style={{ backgroundColor: '#E0E2DB' }}>
             <EditItemDescription
               menuCats={this.props.menuCats}
               itemName={this.state.name}
@@ -498,7 +497,7 @@ class EditMenuItem extends Component {
             />
           </DialogActions>
         </Dialog>
-      </section>
+      </Container>
     );
   }
 }

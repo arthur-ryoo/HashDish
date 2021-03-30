@@ -1,12 +1,14 @@
 import React from 'react';
 import MenuItemContainer from '../MenuItemContainer/MenuItemContainer';
-import styles from './MenuCategory.module.css';
+import { Typography, Container, Divider } from '@material-ui/core';
+import useStyles from './MenuCategoryStyles';
 
 const MenuCategory = (props) => {
+  const classes = useStyles();
   return (
-    <div className={styles.container}>
-      <h2>{props.category}</h2>
-      <div className={styles.category}>
+    <div className={classes.root}>
+      <Typography variant="h4">{props.category}</Typography>
+      <Container className={classes.container}>
         {props.menuItems.map((item, idx) =>
           item.category === props.category && item.status > -1 ? (
             <MenuItemContainer
@@ -27,8 +29,8 @@ const MenuCategory = (props) => {
             />
           ) : null,
         )}
-      </div>
-      <hr />
+      </Container>
+      <Divider />
     </div>
   );
 };

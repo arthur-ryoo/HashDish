@@ -1,123 +1,142 @@
 import React from 'react';
 import EditItemOption from '../EditItemOption/EditItemOption';
-import styles from './EditItemOptionCategory.module.css';
 import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
   Typography,
+  Container,
+  Button,
+  IconButton,
+  Input,
+  InputLabel,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import useStyles from './EditItemOptionCategoryStyles';
+import {
+  Delete,
+  ArrowDownward,
+  ArrowUpward,
+} from '@material-ui/icons';
 
 const EditItemOptionCategory = (props) => {
+  const classes = useStyles();
   return (
-    <div className={styles.options}>
-      <Accordion>
+    <Container className={classes.root}>
+      <Accordion className={classes.container}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography>{props.headerText}</Typography>
+          <Typography variant="h6">{props.headerText}</Typography>
         </AccordionSummary>
-        <AccordionDetails>
-          <button
+        <AccordionDetails className={classes.container}>
+          <Button
             color="primary"
+            size="small"
+            variant="outlined"
             data-opt-type={props.optionType}
             name="addOptCat"
             onClick={props.handleOptionChange}
+            className={classes.add}
           >
-            Add Option Category
-          </button>
-          <div className={styles.optrender}>
+            Add Category
+          </Button>
+          <div className={classes.container}>
             {props.optionsCategories.length > 0 ? (
               props.optionsCategories.map(
                 (optionCategory, optCatIdx) => (
-                  <div className={styles.container} key={optCatIdx}>
-                    <div className={styles.category}>
-                      <div className={styles.field}>
-                        <label>Category Name</label>
-                        <input
-                          data-prop-name="name"
-                          data-category-idx={optCatIdx}
-                          data-opt-type={props.optionType}
-                          name="editOptCat"
-                          type="text"
-                          value={optionCategory.name}
-                          onChange={props.handleOptionChange}
-                        />
+                  <div key={optCatIdx} className={classes.category}>
+                    <div className={classes.interface}>
+                      <div className={classes.title}>
+                        <div className={classes.description}>
+                          <InputLabel>Category Name</InputLabel>
+                          <Input
+                            inputProps={{
+                              'data-prop-name': 'name',
+                              'data-category-idx': optCatIdx,
+                              'data-opt-type': props.optionType,
+                            }}
+                            name="editOptCat"
+                            type="text"
+                            value={optionCategory.name}
+                            onChange={props.handleOptionChange}
+                            className={classes.input}
+                          />
+                          <InputLabel className={classes.label}>
+                            Option Type
+                          </InputLabel>
+                          <select
+                            data-prop-name="option_type"
+                            data-category-idx={optCatIdx}
+                            data-opt-type={props.optionType}
+                            name={'editOptCat'}
+                            value={optionCategory.option_type}
+                            onChange={props.handleOptionChange}
+                            className={classes.input}
+                          >
+                            <option value="radio">radio</option>
+                            <option value="checkbox">checkbox</option>
+                          </select>
+                        </div>
+                        <div className={classes.buttons}>
+                          <IconButton
+                            color="secondary"
+                            data-category-idx={optCatIdx}
+                            data-opt-type={props.optionType}
+                            name="deleteOptCat"
+                            onClick={props.handleOptionChange}
+                          >
+                            <Delete />
+                          </IconButton>
+                          <div className={classes.arrows}>
+                            <Button
+                              size="small"
+                              data-category-idx={optCatIdx}
+                              data-opt-type={props.optionType}
+                              name="moveOptCatBackward"
+                              onClick={props.handleOptionChange}
+                            >
+                              <ArrowUpward />
+                            </Button>
+                            <Button
+                              size="small"
+                              data-category-idx={optCatIdx}
+                              data-opt-type={props.optionType}
+                              name="moveOptCatForward"
+                              onClick={props.handleOptionChange}
+                            >
+                              <ArrowDownward />
+                            </Button>
+                          </div>
+                        </div>
                       </div>
-                      <div className={styles.field}>
-                        <label>Option Type</label>
-                        <select
-                          data-prop-name="option_type"
-                          data-category-idx={optCatIdx}
-                          data-opt-type={props.optionType}
-                          name="editOptCat"
-                          value={optionCategory.option_type}
-                          onChange={props.handleOptionChange}
-                        >
-                          <option value="radio">radio</option>
-                          <option value="checkbox">checkbox</option>
-                        </select>
-                      </div>
-                      <button
-                        data-category-idx={optCatIdx}
-                        data-opt-type={props.optionType}
-                        name="moveOptCatBackward"
-                        onClick={props.handleOptionChange}
-                      >
-                        ▲
-                      </button>
-                      <button
-                        data-category-idx={optCatIdx}
-                        data-opt-type={props.optionType}
-                        name="moveOptCatForward"
-                        onClick={props.handleOptionChange}
-                      >
-                        ▼
-                      </button>
-                      <button
-                        color="secondary"
-                        data-category-idx={optCatIdx}
-                        data-opt-type={props.optionType}
-                        name="deleteOptCat"
-                        onClick={props.handleOptionChange}
-                      >
-                        Delete Category
-                      </button>
-                      <button
+
+                      <Button
                         color="primary"
+                        variant="outlined"
+                        size="small"
                         data-category-idx={optCatIdx}
                         data-opt-type={props.optionType}
                         name="addOption"
                         onClick={props.handleOptionChange}
                       >
                         Add Option
-                      </button>
+                      </Button>
                     </div>
                     {optionCategory.options.length > 0 && (
                       <div>
-                        <table>
-                          <tbody>
-                            <tr>
-                              <th>Name</th>
-                              <th>Add-on Price</th>
-                              <th>Default</th>
-                              <th>Sold Out</th>
-                            </tr>
-                            {optionCategory.options.map(
-                              (option, optionIdx) => (
-                                <EditItemOption
-                                  key={optionIdx}
-                                  optionType={props.optionType}
-                                  option={option}
-                                  optCatIdx={optCatIdx}
-                                  optionIdx={optionIdx}
-                                  handleOptionChange={
-                                    props.handleOptionChange
-                                  }
-                                />
-                              ),
-                            )}
-                          </tbody>
-                        </table>
+                        {optionCategory.options.map(
+                          (option, optionIdx) => (
+                            <EditItemOption
+                              key={optionIdx}
+                              optionType={props.optionType}
+                              option={option}
+                              optCatIdx={optCatIdx}
+                              optionIdx={optionIdx}
+                              handleOptionChange={
+                                props.handleOptionChange
+                              }
+                            />
+                          ),
+                        )}
                       </div>
                     )}
                   </div>
@@ -129,7 +148,7 @@ const EditItemOptionCategory = (props) => {
           </div>
         </AccordionDetails>
       </Accordion>
-    </div>
+    </Container>
   );
 };
 

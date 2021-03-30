@@ -1,21 +1,21 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
-import { Container, Fab } from '@material-ui/core';
+import { Container, Fab, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import useStyles from './RestMenuStyles';
 
-import MenuItems from '../../components/MenuItems/MenuItems';
+import MenuItems from '../../components/MenuComponents/MenuItems/MenuItems';
 import EditMenuItem from '../../components/EditItemForm/EditMenuItem/EditMenuItem';
 
-import styles from './RestMenu.module.css';
-
 const Menu = (props) => {
+  const classes = useStyles();
   return (
     <Container maxWidth="md">
       {props.myKitchen === null ? (
         <Redirect to="/" />
       ) : (
-        <div className={styles.container}>
+        <div className={classes.container}>
           {props.addMenuItem ? (
             <EditMenuItem
               menuCats={props.menuCats}
@@ -26,7 +26,7 @@ const Menu = (props) => {
               handleAddItemForm={props.handleAddItemForm}
             />
           ) : (
-            <div className={styles.add}>
+            <div className={classes.add}>
               <Fab
                 size="large"
                 color="primary"
@@ -37,8 +37,8 @@ const Menu = (props) => {
               </Fab>
             </div>
           )}
-          <div className={styles.content}>
-            <h1>Menu Admin</h1>
+          <div className={''}>
+            <Typography variant="h2">Menu</Typography>
             <MenuItems
               delMenu={props.delMenu}
               selectedMenuItem={props.selectedMenuItem}

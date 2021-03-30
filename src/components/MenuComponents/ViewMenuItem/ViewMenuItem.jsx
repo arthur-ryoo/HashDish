@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AdminButtons from '../AdminButtons/AdminButtons';
+import AdminButtons from '../../AdminButtons/AdminButtons';
 import styles from './ViewMenuItem.module.css';
 import {
   Dialog,
@@ -7,7 +7,7 @@ import {
   DialogContent,
   DialogTitle,
 } from '@material-ui/core';
-import defaultImage from '../../assets/no-product-image-400x400.png';
+import defaultImage from '../../../assets/no-product-image-400x400.png';
 
 let STORAGE_URL = 'https://homecookimages.blob.core.windows.net/';
 if (process.env.NODE_ENV === 'production') {

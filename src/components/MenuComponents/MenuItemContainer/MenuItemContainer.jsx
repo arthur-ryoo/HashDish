@@ -1,5 +1,5 @@
 import React from 'react';
-import EditMenuItem from '../EditItemForm/EditMenuItem/EditMenuItem';
+import EditMenuItem from '../../EditItemForm/EditMenuItem/EditMenuItem';
 import ViewMenuItem from '../ViewMenuItem/ViewMenuItem';
 
 const MenuItemContainer = (props) => {
