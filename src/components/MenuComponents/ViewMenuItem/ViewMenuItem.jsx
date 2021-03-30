@@ -1,92 +1,105 @@
-import React from 'react';
+import React, { Component } from 'react';
 import AdminButtons from '../../AdminButtons/AdminButtons';
+import styles from './ViewMenuItem.module.css';
 import {
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  Paper,
-  Typography,
-  Divider,
 } from '@material-ui/core';
-import useStyles from './ViewMenuItemStyles';
+import defaultImage from '../../../assets/no-product-image-400x400.png';
 
 let STORAGE_URL = 'https://homecookimages.blob.core.windows.net/';
 if (process.env.NODE_ENV === 'production') {
   STORAGE_URL = 'https://lycheestorage9999.blob.core.windows.net/';
 }
 
-const ViewMenuItem = (props) => {
-  const { menuId, name, pictureKey, description, price } = props.item;
-  const classes = useStyles();
-  return (
-    <Paper
-      elevation={2}
-      id={menuId}
-      key={menuId}
-      className={classes.root}
-    >
-      <div className={classes.container}>
-        <Typography variant={'h5'} className={classes.title}>
-          {name}
-        </Typography>
-        {props.item.pictureKey && (
-          <img
-            src={`${STORAGE_URL}pictures/${pictureKey}.jpg`}
-            alt="menu item"
-            className={classes.image}
+class ViewMenuItem extends Component {
+  componentWillUnmount = () => {
+    let closeDel = { target: { id: '' } };
+    this.props.handleDelMenu(closeDel);
+  };
+
+  render() {
+    const {
+      menuId,
+      name,
+      pictureKey,
+      description,
+      price,
+    } = this.props.item;
+
+    const {
+      delMenu,
+      idx,
+      handleDelMenu,
+      handleMenuItemDelete,
+      handleMenuItemEdit,
+    } = this.props;
+
+    const maxLength = 125;
+
+    return (
+      <section id={menuId} key={menuId} className={styles.item}>
+        <div className={styles.title}>
+          <h3>{name}</h3>
+          {pictureKey ? (
+            <img
+              src={`${STORAGE_URL}pictures/${pictureKey}.jpg`}
+              alt="menu item"
+            />
+          ) : (
+            <img src={defaultImage} alt="menu item" />
+          )}
+        </div>
+        <div className={styles.description}>
+          {description && description.length > maxLength ? (
+            <p>{description.substring(0, maxLength)}...</p>
+          ) : (
+            <p>{description}</p>
+          )}
+        </div>
+        <div className={styles.price}>
+          <p>{price}</p>
+        </div>
+        {delMenu === menuId ? (
+          <Dialog open={true}>
+            <DialogTitle>{name}</DialogTitle>
+            <DialogContent>
+              <p>Are you sure you want to delete this item?</p>
+            </DialogContent>
+            <DialogActions>
+              <AdminButtons
+                submitId=""
+                submitTitle="Cancel"
+                cancelId={menuId}
+                cancelTitle="Yes, Delete"
+                submitFunction={() => {
+                  handleDelMenu(null);
+                }}
+                cancelFunction={() => {
+                  handleMenuItemDelete(menuId);
+                }}
+              />
+            </DialogActions>
+          </Dialog>
+        ) : (
+          <AdminButtons
+            submitId={menuId}
+            submitTitle="Edit"
+            cancelId={menuId}
+            cancelTitle="Delete"
+            submitFunction={() => {
+              handleMenuItemEdit(idx);
+            }}
+            cancelFunction={() => {
+              handleDelMenu(menuId);
+            }}
           />
         )}
-        <Typography
-          className={classes.description}
-          variant={'caption'}
-        >
-          {description}
-        </Typography>
-        <Typography className={classes.price} variant={'caption'}>
-          {price}
-        </Typography>
-      </div>
-      <Divider />
-      {props.delMenu === menuId ? (
-        <Dialog open={true}>
-          <DialogTitle>{name}</DialogTitle>
-          <DialogContent>
-            <Typography variant={'body1'}>
-              Are you sure you want to delete item?
-            </Typography>
-          </DialogContent>
-          <DialogActions>
-            <AdminButtons
-              submitId=""
-              submitTitle="Cancel"
-              cancelId={menuId}
-              cancelTitle="Yes, Delete"
-              submitFunction={() => {
-                props.handleDelMenu(null);
-              }}
-              cancelFunction={() => {
-                props.handleMenuItemDelete(menuId);
-              }}
-            />
-          </DialogActions>
-        </Dialog>
-      ) : (
-        <AdminButtons
-          submitId={menuId}
-          submitTitle="Edit"
-          cancelId={menuId}
-          cancelTitle="Delete"
-          submitFunction={() => {
-            props.handleMenuItemEdit(props.idx);
-          }}
-          cancelFunction={() => {
-            props.handleDelMenu(menuId);
-          }}
-        />
-      )}
-    </Paper>
-  );
-};
+      </section>
+    );
+  }
+}
 
 export default ViewMenuItem;
