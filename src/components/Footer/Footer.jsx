@@ -4,7 +4,7 @@ import styles from './Footer.module.css';
 const Footer = (props) => {
   return (
     <footer className={styles.container}>
-      <p>Hashdish &copy; {new Date().getFullYear()}</p>
+      <p>HashDish &copy; {new Date().getFullYear()}</p>
     </footer>
   );
 };

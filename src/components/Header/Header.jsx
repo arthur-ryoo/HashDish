@@ -38,7 +38,7 @@ const Header = (props) => {
             <Fragment>
               <div className={styles.mobile}>
                 <Link to="/">
-                  <h1>Hashdish</h1>
+                  <h1>HashDish</h1>
                 </Link>
                 <h2>Restaurant Manager</h2>
               </div>
@@ -51,7 +51,7 @@ const Header = (props) => {
             <Fragment>
               <div className={styles.title}>
                 <Link to="/">
-                  <h1>Hashdish</h1>
+                  <h1>HashDish</h1>
                 </Link>
                 <h2>Restaurant Manager</h2>
               </div>
