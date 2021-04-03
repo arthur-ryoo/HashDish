@@ -138,6 +138,35 @@ class LoginForm extends Component {
       : this.props.history.push('/login');
   };
 
+  handleDemoSubmit = async (event) => {
+    event.preventDefault();
+    this.setState({ isLoading: true });
+
+    // production account
+    const email = 'curryhouse@hashdish.com';
+    const password = 'Zjflgkdntm';
+
+    await API.post(
+      `/kitchen/authorize?email=${email}&password=${password}`,
+    )
+      .then((response) => {
+        if (response.status === 200) {
+          LocalStorageService.setToken(response.data);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        this.setState({ error: 'Failed to log in' });
+      })
+      .finally(() => {
+        this.setState({ isLoading: false });
+      });
+    this.props.handleSignupOrLogin();
+    LocalStorageService.getAuthToken()
+      ? this.props.history.push('/profile')
+      : this.props.history.push('/login');
+  };
+
   render() {
     const { classes } = this.props;
     const {
@@ -228,17 +257,34 @@ class LoginForm extends Component {
               >
                 Log In
               </Button>
-              <Grid container>
-                <Grid item>
-                  <Link href="/signup" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
-              <Box mt={5}>
-                <Copyright />
-              </Box>
             </form>
+
+            <form
+              className={classes.form}
+              noValidate
+              onSubmit={this.handleDemoSubmit}
+            >
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="secondary"
+                className={classes.submit}
+              >
+                Demo Log In
+              </Button>
+            </form>
+
+            <Grid container>
+              <Grid item>
+                <Link href="/signup" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+            <Box mt={5}>
+              <Copyright />
+            </Box>
           </div>
         </Grid>
         <Backdrop className={classes.backdrop} open={isLoading}>
