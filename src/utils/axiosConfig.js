@@ -2,11 +2,12 @@ import axios from 'axios';
 import LocalStorageService from './localStorageService';
 
 const localStorageService = LocalStorageService.getService();
-const cancelTokenSource = axios.CancelToken.source()
+const cancelTokenSource = axios.CancelToken.source();
 
 let API_URL;
 process.env.NODE_ENV === 'production'
-  ? (API_URL = 'https://prod.teaoclock.app/')
+  ? // ? (API_URL = 'https://prod.teaoclock.app/')
+    (API_URL = 'https://api.hashdish.com/')
   : (API_URL = 'https://dev.hashdish.com/');
 
 const axiosApiInstance = axios.create({
@@ -27,7 +28,7 @@ axiosApiInstance.interceptors.request.use(
   },
   (error) => {
     Promise.reject(error);
-  }
+  },
 );
 
 axiosApiInstance.interceptors.response.use(
@@ -56,17 +57,15 @@ axiosApiInstance.interceptors.response.use(
           console.log(res.status);
           if (res.status === 200) {
             localStorageService.setToken(res.data);
-            axiosApiInstance.defaults.headers.common['Authorization'] =
-              'Bearer ' + localStorageService.getAuthToken();
+            axiosApiInstance.defaults.headers.common[
+              'Authorization'
+            ] = 'Bearer ' + localStorageService.getAuthToken();
             return axiosApiInstance(originalRequest);
           }
         });
     }
     return Promise.reject(error);
-  }
+  },
 );
 
-export {
-  axiosApiInstance,
-  cancelTokenSource,
-};
+export { axiosApiInstance, cancelTokenSource };
