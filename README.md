@@ -1,5 +1,6 @@
 # HashDish
 An admin website for restaurant owners of the food delivery mobile app, [HashDish](https://www.hashdish.com/).
+![hashdish](https://user-images.githubusercontent.com/51396212/113907287-029c2280-978a-11eb-8b73-b2ef0ed34b73.png)
 
 # Links
 ### Demo: [HashDish](https://master.d3ll97k2wyiyap.amplifyapp.com/)
