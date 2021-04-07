@@ -3,7 +3,7 @@ An admin website for restaurant owners of the food delivery mobile app, [HashDis
 ![hashdish](https://user-images.githubusercontent.com/51396212/113907287-029c2280-978a-11eb-8b73-b2ef0ed34b73.png)
 
 # Links
-### Demo: [HashDish](https://master.d3ll97k2wyiyap.amplifyapp.com/)
+### Demo: [HashDish](https://master.d3ll97k2wyiyap.amplifyapp.com/) - Demo login is available
 
 # Technologies
 - Front-end development
