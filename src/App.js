@@ -74,9 +74,9 @@ class App extends Component {
   };
 
   handleGetMenuCategories = (arr) => {
-    let catArr = arr.map((el) => (
-      el.status > -1 ? el.category : null
-    ));
+    let catArr = arr.map((el) =>
+      el.status > -1 ? el.category : null,
+    );
     let uniqueCatsArr = [...new Set(catArr)];
     this.setState({ menuCats: uniqueCatsArr });
   };
@@ -170,7 +170,13 @@ class App extends Component {
               <Route
                 exact
                 path="/"
-                render={() => <h1>Home Page Content</h1>}
+                render={() =>
+                  LocalStorageService.getAuthToken() ? (
+                    <Redirect to="/menu" />
+                  ) : (
+                    <Redirect to="/login" />
+                  )
+                }
               />
               <Route
                 exact
