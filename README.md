@@ -13,12 +13,16 @@ An admin website for restaurant owners of the food delivery mobile app, [HashDis
 	
 # Features
 - User login
+	- ![login](https://user-images.githubusercontent.com/51396212/113986125-bd1b3c00-9801-11eb-97a3-741fe7e0c8c0.png) 
 - Restaurant registration with Google Places API
+	- ![googleapi](https://user-images.githubusercontent.com/51396212/113986114-bbea0f00-9801-11eb-93c7-45598a297c3d.png) 
 - JWT refresh token flow
 - Add / Edit / Delete memu items
 - Add optional and required options on menu item
-- Upload menu item and restaurant logo image
-- Edit business hours
+- Upload restaurant logo image
+	- ![profile](https://user-images.githubusercontent.com/51396212/113986108-bab8e200-9801-11eb-934c-011269161c54.png)
+- Set business hours
+	- ![openhours](https://user-images.githubusercontent.com/51396212/113986121-bc82a580-9801-11eb-83b3-185e2e7ce939.png) 
 
 # Future Implementation
 - Add feature to change category and menu item order
