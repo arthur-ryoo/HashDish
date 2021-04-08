@@ -18,7 +18,9 @@ An admin website for restaurant owners of the food delivery mobile app, [HashDis
 	- ![googleapi](https://user-images.githubusercontent.com/51396212/113986114-bbea0f00-9801-11eb-93c7-45598a297c3d.png) 
 - JWT refresh token flow
 - Add / Edit / Delete memu items
+	- ![hash_cud](https://user-images.githubusercontent.com/51396212/114088673-1dde5f00-986a-11eb-9baf-b24efbcff0ba.gif) 
 - Add optional and required options on menu item
+	- ![options](https://user-images.githubusercontent.com/51396212/114087017-39486a80-9868-11eb-81de-cd8a14a079ea.gif) 
 - Upload restaurant logo image
 	- ![profile](https://user-images.githubusercontent.com/51396212/113986108-bab8e200-9801-11eb-934c-011269161c54.png)
 - Set business hours
